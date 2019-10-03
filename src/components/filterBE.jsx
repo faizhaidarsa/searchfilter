@@ -123,7 +123,7 @@ export class filterBE extends Component {
     render() {
         return (
             <div className='container-fluid py-3 bg-secondary'>
-                <div className='card'>
+                <div className='card border-0'>
                     <div className='card-header bg-dark text-center text-white'><h3>Titanic Passenger Data</h3></div>
                     <div className='card-body'>
                         <div className='row'>
