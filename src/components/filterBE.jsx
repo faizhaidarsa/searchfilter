@@ -58,13 +58,10 @@ export class filterBE extends Component {
     }
 
     renderOptionValue=()=>{
-        let hasil=[]
-        this.state.pClass.map((item,key)=>{
-            hasil.push(item.Pclass)
-            hasil.push(',')
+        let hasil = this.state.pClass.map((item)=>{
+            return item.Pclass
         })
-        hasil.pop()
-        return hasil.join('')
+        return hasil.join(',')
     }
     
     renderTable=()=>{
