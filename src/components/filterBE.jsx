@@ -30,7 +30,6 @@ export class filterBE extends Component {
         }).catch(err=>{
             console.log(err);
             this.setState({loading:false})
-            
         })
     }
     
@@ -57,13 +56,6 @@ export class filterBE extends Component {
         return hasil
     }
 
-    renderOptionValue=()=>{
-        let hasil = this.state.pClass.map((item)=>{
-            return item.Pclass
-        })
-        return hasil.join(',')
-    }
-    
     renderTable=()=>{
         
         
@@ -139,7 +131,7 @@ export class filterBE extends Component {
                             <div className='col-4'>
                                 <select className='form-control' onChange={e=>this.setState({inputGender:e.target.value})} defaultValue="">
                                     <option disabled value="">Gender . . .</option>
-                                    <option value="male','female">All</option>
+                                    <option value="">All gender</option>
                                     <option value="male">Male</option>
                                     <option value="female">Female</option>
                                 </select>
@@ -149,14 +141,14 @@ export class filterBE extends Component {
                         <div className='col-4'>
                                 <select className='form-control' onChange={e=>this.setState({inputClass:e.target.value})} defaultValue="">
                                     <option disabled value="">Class . . .</option>
-                                    <option value={this.renderOptionValue()}>All</option>
+                                    <option value="">All class</option>
                                     {this.renderOption()}
                                 </select>
                             </div>
                             <div className='col-4'>
                                 <select className='form-control' onChange={e=>this.setState({inputSurvived:e.target.value})} defaultValue="">
                                     <option disabled value="">Survived . . .</option>
-                                    <option value="0,1">All</option>
+                                    <option value="">All (dead/alive)</option>
                                     <option value="0">Dead</option>
                                     <option value="1">Alive</option>
                                 </select>
