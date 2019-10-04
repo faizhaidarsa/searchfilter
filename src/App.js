@@ -7,7 +7,7 @@ export class App extends Component {
   render() {
     return (
         <Switch>
-        <Route exact path ='/' component={filterBE}/>
+          <Route path ='/' component={filterBE}/>
         </Switch>
     )
   }

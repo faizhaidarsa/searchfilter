@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Axios from 'axios'
-
+import querystring from 'query-string'
 export class filterBE extends Component {
     
     state={
@@ -17,33 +17,48 @@ export class filterBE extends Component {
 
     componentDidMount() {
         this.getClass()
-        this.getAllData()
+        this.setStateFromUrl()
+        setTimeout(this.getAllData,0)
     }
     
+    setStateFromUrl=()=>{
+        let {inputAgeMax,inputAgeMin,inputClass,inputGender,inputSurvived,inputName}=querystring.parse(this.props.location.search)
+        
+        if(inputName){
+            this.setState({inputName})
+        }
+        if(inputSurvived){
+            this.setState({inputSurvived})
+        }
+        if(inputGender){
+            this.setState({inputGender})
+        }
+        if(inputClass){
+            this.setState({inputClass})
+        }
+        if(inputAgeMax){
+            this.setState({inputAgeMax})
+        }
+        if(inputAgeMin){
+            this.setState({inputAgeMin})
+        }
+    }
 
     getAllData = () =>{
         this.setState({loading:true})
-        Axios.get(
-            'http://localhost:9000/getall'
-        ).then(res=>{            
-            this.setState({allData:res.data,loading:false})
-        }).catch(err=>{
-            console.log(err);
-            this.setState({loading:false})
-        })
+        this.getDataAPI()
     }
     
     getClass = ()=>{
-        this.setState({loading:true})
+        
         Axios.get(
             'http://localhost:9000/getclass'
         ).then((res)=>{           
-            this.setState({pClass:res.data,loading:false})
+            this.setState({pClass:res.data})
             
             
         }).catch(err=>{
             console.log(err);
-            this.setState({loading:false})
         })
     }
 
@@ -91,8 +106,34 @@ export class filterBE extends Component {
         )
     }
 
-    onFilter = ()=>{
-     
+    pushUrls=()=>{
+        let param ={}
+        let {inputAgeMax,inputAgeMin,inputClass,inputGender,inputSurvived,inputName}=this.state
+        if(inputName){
+            param={...param,inputName}
+        }
+        if(inputSurvived){
+            param={...param,inputSurvived}
+        }
+        if(inputGender){
+            param={...param,inputGender}
+        }
+        if(inputClass){
+            param={...param,inputClass}
+        }
+        if(inputAgeMax){
+            param={...param,inputAgeMax}
+        }
+        if(inputAgeMin){
+            param={...param,inputAgeMin}
+        }
+        this.props.history.push(`/filter?${querystring.stringify(param)}`)
+        
+
+        
+    }
+
+    getDataAPI=()=>{
         Axios.get(
             'http://localhost:9000/getfilter',
             {
@@ -106,10 +147,15 @@ export class filterBE extends Component {
                 }
             }
         ).then((res)=>{
-            this.setState({allData:res.data})
+            this.setState({allData:res.data,loading:false})
         }).catch((err)=>{
             console.log(err);
         })
+    }
+
+    onFilter = ()=>{
+        this.pushUrls()
+        this.getDataAPI()
     }
     
     render() {
